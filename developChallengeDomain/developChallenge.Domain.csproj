@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,12 +6,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Entities\" />
-    <Folder Include="Interfaces\Services\" />
-    <Folder Include="Interfaces\Repository\" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\developChallengeWebapi\developChallenge.Web.Api.csproj" />
