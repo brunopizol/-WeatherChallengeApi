@@ -1,4 +1,5 @@
 ﻿using developChallenge.Domain.Entities;
+using developChallenge.Infra.Repository;
 using developChallenge.Domain.Interfaces.Services;
 using System;
 using System.Collections.Generic;
@@ -9,18 +10,23 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using developChallenge.Web.Api.DTOs;
+using developChallenge.Domain.Interfaces.Repository;
 
 namespace developChallenge.Service
 {
     public class AirportServices : IAirportServices
     {
         private readonly HttpClient _client;
+        private readonly IAirportInfoRepository _airportInfoRepository;
 
-        public AirportServices()
+        public AirportServices(HttpClient client, IAirportInfoRepository airportInfoRepository)
         {
-            _client = new HttpClient();
+            _client = client ?? throw new ArgumentNullException(nameof(client));
             _client.BaseAddress = new Uri("https://brasilapi.com.br/api/cptec/v1");
+
+            _airportInfoRepository = airportInfoRepository ?? throw new ArgumentNullException(nameof(airportInfoRepository));
         }
+
 
         public Task AddAsync(Airport airport)
         {
@@ -31,7 +37,7 @@ namespace developChallenge.Service
         {
             throw new NotImplementedException();
         }
-
+       
         public async Task<Airport> GetAirportByIdAsync(string id)
         {
             try
@@ -81,9 +87,23 @@ namespace developChallenge.Service
             throw new NotImplementedException();
         }
 
-        public Task<Airport> GetAirportByNameAsync(string name)
+        public async Task<Airport> GetAirportByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException(nameof(name));
+
+            try
+            {
+                var result = _airportInfoRepository.GetByNameAsync(name);
+                return await this.GetAirportByIdAsync(result.First().ICAO);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         public Task<Airport> GetAsync(int id)

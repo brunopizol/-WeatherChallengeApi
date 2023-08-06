@@ -8,6 +8,7 @@ namespace developChallenge.Domain.Entities
 {
     public class Airport
     {
+        public int Id { get; set; }
         public string? CodigoIcao { get; set; }
         public DateTime AtualizadoEm { get; set; }
         public float PressaoAtmosferica { get; set; }

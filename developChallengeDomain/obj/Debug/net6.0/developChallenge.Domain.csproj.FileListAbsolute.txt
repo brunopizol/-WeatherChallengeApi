@@ -1,13 +1,12 @@
+C:\developChallengeAEC\developChallengeDomain\bin\Debug\net6.0\developChallenge.Domain.deps.json
+C:\developChallengeAEC\developChallengeDomain\bin\Debug\net6.0\developChallenge.Domain.runtimeconfig.json
+C:\developChallengeAEC\developChallengeDomain\bin\Debug\net6.0\developChallenge.Domain.dll
+C:\developChallengeAEC\developChallengeDomain\bin\Debug\net6.0\developChallenge.Domain.pdb
 C:\developChallengeAEC\developChallengeDomain\obj\Debug\net6.0\developChallenge.Domain.csproj.AssemblyReference.cache
 C:\developChallengeAEC\developChallengeDomain\obj\Debug\net6.0\developChallenge.Domain.GeneratedMSBuildEditorConfig.editorconfig
 C:\developChallengeAEC\developChallengeDomain\obj\Debug\net6.0\developChallenge.Domain.AssemblyInfoInputs.cache
 C:\developChallengeAEC\developChallengeDomain\obj\Debug\net6.0\developChallenge.Domain.AssemblyInfo.cs
 C:\developChallengeAEC\developChallengeDomain\obj\Debug\net6.0\developChallenge.Domain.csproj.CoreCompileInputs.cache
-C:\developChallengeAEC\developChallengeDomain\bin\Debug\net6.0\developChallenge.Domain.exe
-C:\developChallengeAEC\developChallengeDomain\bin\Debug\net6.0\developChallenge.Domain.deps.json
-C:\developChallengeAEC\developChallengeDomain\bin\Debug\net6.0\developChallenge.Domain.runtimeconfig.json
-C:\developChallengeAEC\developChallengeDomain\bin\Debug\net6.0\developChallenge.Domain.dll
-C:\developChallengeAEC\developChallengeDomain\bin\Debug\net6.0\developChallenge.Domain.pdb
 C:\developChallengeAEC\developChallengeDomain\obj\Debug\net6.0\developChallenge.Domain.dll
 C:\developChallengeAEC\developChallengeDomain\obj\Debug\net6.0\refint\developChallenge.Domain.dll
 C:\developChallengeAEC\developChallengeDomain\obj\Debug\net6.0\developChallenge.Domain.pdb
