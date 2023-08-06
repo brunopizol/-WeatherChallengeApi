@@ -8,11 +8,16 @@ namespace developChallenge.Domain.Entities
 {
     public class Airport
     {
-        #region properties
-        public int Id { get; set; }
-        public string? Name { get; set; }
-        public int temperature { get; set; }
-        public City? City { get; set; }
-        #endregion
+        public string? CodigoIcao { get; set; }
+        public DateTime AtualizadoEm { get; set; }
+        public float PressaoAtmosferica { get; set; }
+        public string Visibilidade { get; set; }
+        public int Vento { get; set; }
+        public int DirecaoVento { get; set; }
+        public int Umidade { get; set; }
+        public string? Condicao { get; set; }
+        public string? CondicaoDesc { get; set; }
+        public int Temperatura { get; set; }
+
     }
 }

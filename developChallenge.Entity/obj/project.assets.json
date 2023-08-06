@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net6.0": {
+      "developChallenge.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/developChallenge.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/developChallenge.Domain.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "developChallenge.Domain/1.0.0": {
+      "type": "project",
+      "path": "../developChallengeDomain/developChallenge.Domain.csproj",
+      "msbuildProject": "../developChallengeDomain/developChallenge.Domain.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net6.0": []
+    "net6.0": [
+      "developChallenge.Domain >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\bruno\\.nuget\\packages\\": {}
@@ -13,11 +32,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\bruno\\source\\repos\\developChallenge\\developChallenge.Entity\\developChallenge.Service.csproj",
+      "projectUniqueName": "C:\\developChallengeAEC\\developChallenge.Entity\\developChallenge.Service.csproj",
       "projectName": "developChallenge.Service",
-      "projectPath": "C:\\Users\\bruno\\source\\repos\\developChallenge\\developChallenge.Entity\\developChallenge.Service.csproj",
+      "projectPath": "C:\\developChallengeAEC\\developChallenge.Entity\\developChallenge.Service.csproj",
       "packagesPath": "C:\\Users\\bruno\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\bruno\\source\\repos\\developChallenge\\developChallenge.Entity\\obj\\",
+      "outputPath": "C:\\developChallengeAEC\\developChallenge.Entity\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\bruno\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -33,7 +52,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\developChallengeAEC\\developChallengeDomain\\developChallenge.Domain.csproj": {
+              "projectPath": "C:\\developChallengeAEC\\developChallengeDomain\\developChallenge.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -60,7 +83,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

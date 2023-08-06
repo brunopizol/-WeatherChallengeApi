@@ -1,18 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "WKsBZXeZyb3hxApPEf8deCu5ckwRyzPVQTjhwRN0vLziJO3qqGw4kOU8bwYEPem/V0QHDVipWUIWewBi1CWnsQ==",
-  "success": false,
-  "projectFilePath": "C:\\Users\\bruno\\source\\repos\\developChallenge\\developChallengeDomain\\developChallenge.Domain.csproj",
+  "dgSpecHash": "mviKvZxjlHfc6TBa0BLL0WwPcGO4S5qEwgMFsQv68ErD41GnRkRi7Hq7luy+7XIDXtwagO+i9gyQWLKJxcAt1A==",
+  "success": true,
+  "projectFilePath": "C:\\developChallengeAEC\\developChallengeDomain\\developChallenge.Domain.csproj",
   "expectedPackageFiles": [],
-  "logs": [
-    {
-      "code": "NU1105",
-      "level": "Error",
-      "message": "Não é possível encontrar as informações do projeto para 'C:\\Users\\bruno\\source\\repos\\developChallenge\\developChallengeWebapi\\developChallenge.Web.Api.csproj'. Se você está usando o Visual Studio, isso pode ocorrer porque o projeto não está carregado ou não faz parte da solução atual. Portanto, execute uma restauração usando a linha de comando. Do contrário, o arquivo de projeto pode ser inválido ou pode haver destinos obrigatórios para a restauração ausentes.",
-      "libraryId": "C:\\Users\\bruno\\source\\repos\\developChallenge\\developChallengeWebapi\\developChallenge.Web.Api.csproj",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    }
-  ]
+  "logs": []
 }

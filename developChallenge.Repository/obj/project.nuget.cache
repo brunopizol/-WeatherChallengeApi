@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rDv3GTjITWqCE60fiPjnh8EvTrHbfh1L2dtMoiH2HTAKH2CTvaIrGm443JZ8rJX8wDOKuCldQJ7U75AKDQNFJg==",
+  "dgSpecHash": "CXrkxqVimS823AS9QCcYJppri91lvqd5NjG1KZ5RRg2NMQDKbjIwL6SJQ+goNpmgZWpn2dhCjDVCJXN+aboflQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\bruno\\source\\repos\\developChallenge\\developChallenge.Repository\\developChallenge.Infra.csproj",
+  "projectFilePath": "C:\\developChallengeAEC\\developChallenge.Repository\\developChallenge.Infra.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\bruno\\.nuget\\packages\\entityframework\\6.1.0\\entityframework.6.1.0.nupkg.sha512",
     "C:\\Users\\bruno\\.nuget\\packages\\microsoft.aspnet.identity.core\\2.2.4\\microsoft.aspnet.identity.core.2.2.4.nupkg.sha512",

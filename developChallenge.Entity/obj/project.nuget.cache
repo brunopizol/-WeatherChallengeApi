@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VKw9Qrv2aauKfRfFWBnAIur0Oo7O2XgxGJhIkdyzQVyhiYkBUnsPQ3EVIi0YAXVcR3TYID4Sn+8aIm+F9zdzuQ==",
+  "dgSpecHash": "twjoLEti/K6KOofoziovU5/qqWLjNNkhzWr16+R+BbKmGS3y8AZ+bT90s0wBBDJBDkaE6e9ixF7fviwMImojXw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\bruno\\source\\repos\\developChallenge\\developChallenge.Entity\\developChallenge.Service.csproj",
+  "projectFilePath": "C:\\developChallengeAEC\\developChallenge.Entity\\developChallenge.Service.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

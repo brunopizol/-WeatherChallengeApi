@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using developChallenge.Domain.Services;
+using developChallenge.Domain.Entities;
+using developChallenge.Domain.Interfaces.Services;
 
 namespace developChallenge.Web.Api.Controllers
 {
@@ -11,9 +12,9 @@ namespace developChallenge.Web.Api.Controllers
         private readonly IAirportServices _AirportServices;
         #endregion
         #region Constructors
-        public CategoryController(IAirportServices categoryServices)
+        public AirportController(IAirportServices airportServices)
         {
-            _AirportServices = categoryServices;
+            _AirportServices = airportServices;
         }
         #endregion
 
@@ -24,30 +25,18 @@ namespace developChallenge.Web.Api.Controllers
             return await _AirportServices.GetListAsync();
         }
 
-        [HttpGet("{id}")]
-        public async Task<Airport> GetAsync(int id)
+        [HttpGet("[action]")]
+        public async Task<Airport> GetAirportByIdAsync(string id)
         {
-            return await _AirportServices.GetAsync(id);
+            return await _AirportServices.GetAirportByIdAsync(id);
         }
 
-        [HttpPost]
-        public async Task<bool> AddAsync([FromBody] Airport airport)
+        [HttpGet("[action]")]
+        public async Task<Airport> GetAirportByNameAsync(string name)
         {
-            return await _AirportServices.AddAsync(airport);
-        }
-
-        [HttpPut]
-        public async Task<bool> UpdateAsync([FromBody] Airport airport)
-        {
-            return await _AirportServices.UpdateAsync(airport);
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<bool> DeleteAsync(int id)
-        {
-            return await _AirportServices.DeleteAsync(id);
+            return await _AirportServices.GetAirportByNameAsync(name);
         }
         #endregion
     }
 }
-}
+
