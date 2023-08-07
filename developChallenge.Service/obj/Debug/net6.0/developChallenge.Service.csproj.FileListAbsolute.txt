@@ -17,3 +17,8 @@ C:\developChallengeAEC\developChallenge.Service\obj\Debug\net6.0\refint\developC
 C:\developChallengeAEC\developChallenge.Service\obj\Debug\net6.0\developChallenge.Service.pdb
 C:\developChallengeAEC\developChallenge.Service\obj\Debug\net6.0\developChallenge.Service.genruntimeconfig.cache
 C:\developChallengeAEC\developChallenge.Service\obj\Debug\net6.0\ref\developChallenge.Service.dll
+C:\developChallengeAEC\developChallenge.Service\bin\Debug\net6.0\developChallenge.Worker.deps.json
+C:\developChallengeAEC\developChallenge.Service\bin\Debug\net6.0\developChallenge.Worker.runtimeconfig.json
+C:\developChallengeAEC\developChallenge.Service\bin\Debug\net6.0\developChallenge.Worker.exe
+C:\developChallengeAEC\developChallenge.Service\bin\Debug\net6.0\developChallenge.Worker.dll
+C:\developChallengeAEC\developChallenge.Service\bin\Debug\net6.0\developChallenge.Worker.pdb

@@ -33,6 +33,8 @@ namespace developChallenge.Infra.Context
         public DbSet<City> Cities { get; set; }
         public DbSet<Airport> Airports { get; set; }
         public DbSet<AirportInfo> AirportsInfos { get; set; }
+        public DbSet<Weather> Climas { get; set; }
+        public DbSet<Log> Logs { get; set; }
         #endregion
 
         #region Methods
@@ -67,20 +69,20 @@ namespace developChallenge.Infra.Context
                 entity.Property(e => e.StateCode)
                 .HasMaxLength(2);
 
-                entity.HasOne(e => e.Clima)
+                entity.HasOne(e => e.clima)
                       .WithOne(c => c.City)
-                      .HasForeignKey<Clima>(c => c.CityId);
+                      .HasForeignKey<Weather>(c => c.CityId);
             });
 
            
-            modelBuilder.Entity<Clima>(entity =>
+            modelBuilder.Entity<Weather>(entity =>
             {
 
                 entity.HasKey(e => e.CityId);
 
                 entity.HasOne(e => e.City)
-                      .WithOne(c => c.Clima)
-                      .HasForeignKey<Clima>(c => c.CityId);
+                      .WithOne(c => c.clima)
+                      .HasForeignKey<Weather>(c => c.CityId);
             });
            
             modelBuilder.Entity<AirportInfo>().HasKey(a => a.ICAO);
@@ -92,6 +94,21 @@ namespace developChallenge.Infra.Context
             modelBuilder.Entity<AirportInfo>().Property(a => a.CityName).IsRequired().HasMaxLength(50);
             modelBuilder.Entity<AirportInfo>().Property(a => a.StateCode).IsRequired().HasMaxLength(2);
 
+            modelBuilder.Entity<Log>()
+            .HasKey(a => a.Id);
+
+            modelBuilder.Entity<Log>(entity =>
+            {
+
+                entity.Property(e => e.Description)
+                      .HasMaxLength(300);
+                entity.Property(e => e.Action)
+                      .HasMaxLength(50);
+                entity.Property(e => e.status)
+                      .HasMaxLength(50);
+                entity.Property(e => e.CreatedAt)
+                      .HasDefaultValueSql();
+            });
 
             //add some datas from airports to make easy the requests from user
 

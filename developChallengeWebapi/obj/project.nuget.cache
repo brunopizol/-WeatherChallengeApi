@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "jbKTkPgrgr+CBHauxN+vEhmH93AAg1jOyxur2kBGaIVyGq8k6/i5zoblxgGu0Q5kk4+LJ7yjoSCWZOW8f9Z63A==",
+  "dgSpecHash": "0VbtLr0hFxIVO0W/vF9eqWc1sqN/LOzQyj3ixsWLantGqPTHa3TK/Porg8kSGjresDXRi6jaKs0PUugNAryy1A==",
   "success": true,
   "projectFilePath": "C:\\developChallengeAEC\\developChallengeWebapi\\developChallenge.Web.Api.csproj",
   "expectedPackageFiles": [
@@ -46,6 +46,7 @@
     "C:\\Users\\bruno\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
     "C:\\Users\\bruno\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\bruno\\.nuget\\packages\\mysqlconnector\\2.2.5\\mysqlconnector.2.2.5.nupkg.sha512",
+    "C:\\Users\\bruno\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\bruno\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\7.0.0\\pomelo.entityframeworkcore.mysql.7.0.0.nupkg.sha512",
     "C:\\Users\\bruno\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
     "C:\\Users\\bruno\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",

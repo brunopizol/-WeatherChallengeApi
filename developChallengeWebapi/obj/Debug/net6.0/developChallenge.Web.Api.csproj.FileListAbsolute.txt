@@ -88,3 +88,9 @@ C:\developChallengeAEC\developChallengeWebapi\obj\Debug\net6.0\developChallenge.
 C:\developChallengeAEC\developChallengeWebapi\obj\Debug\net6.0\ref\developChallenge.Web.Api.dll
 C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\MySqlConnector.dll
 C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
+C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Worker.deps.json
+C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Worker.runtimeconfig.json
+C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Worker.exe
+C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Worker.dll
+C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Worker.pdb

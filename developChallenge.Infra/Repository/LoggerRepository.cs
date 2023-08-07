@@ -10,9 +10,10 @@ namespace developChallenge.Infra.Repository
 {
     public class LoggerRepository : ILoggerRepository
     {
-        public Task AddAsync(Log log)
+
+        public Task AddLogAsync(Log log)
         {
-            throw new NotImplementedException();
+            
         }
 
         public Task<Log> GetAsync(int id)

@@ -1,0 +1,15 @@
+C:\developChallengeAEC\Worker\bin\Debug\net6.0\developChallenge.Worker.exe
+C:\developChallengeAEC\Worker\bin\Debug\net6.0\developChallenge.Worker.deps.json
+C:\developChallengeAEC\Worker\bin\Debug\net6.0\developChallenge.Worker.runtimeconfig.json
+C:\developChallengeAEC\Worker\bin\Debug\net6.0\developChallenge.Worker.dll
+C:\developChallengeAEC\Worker\bin\Debug\net6.0\developChallenge.Worker.pdb
+C:\developChallengeAEC\Worker\obj\Debug\net6.0\developChallenge.Worker.csproj.AssemblyReference.cache
+C:\developChallengeAEC\Worker\obj\Debug\net6.0\developChallenge.Worker.GeneratedMSBuildEditorConfig.editorconfig
+C:\developChallengeAEC\Worker\obj\Debug\net6.0\developChallenge.Worker.AssemblyInfoInputs.cache
+C:\developChallengeAEC\Worker\obj\Debug\net6.0\developChallenge.Worker.AssemblyInfo.cs
+C:\developChallengeAEC\Worker\obj\Debug\net6.0\developChallenge.Worker.csproj.CoreCompileInputs.cache
+C:\developChallengeAEC\Worker\obj\Debug\net6.0\developChallenge.Worker.dll
+C:\developChallengeAEC\Worker\obj\Debug\net6.0\refint\developChallenge.Worker.dll
+C:\developChallengeAEC\Worker\obj\Debug\net6.0\developChallenge.Worker.pdb
+C:\developChallengeAEC\Worker\obj\Debug\net6.0\developChallenge.Worker.genruntimeconfig.cache
+C:\developChallengeAEC\Worker\obj\Debug\net6.0\ref\developChallenge.Worker.dll

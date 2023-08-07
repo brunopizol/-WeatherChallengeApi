@@ -19,25 +19,16 @@ namespace developChallenge.Web.Api.Controllers
         #endregion
 
         #region Actions
-        [HttpGet("[action]")]
-        public async Task<IEnumerable<City>> ListAsync()
-        {
-            return await _CityServices.GetListAsync();
-        }
 
-        [HttpGet("{id}")]
+
+        [HttpGet("[action]")]
         public async Task<City> GetCityByIdAsync(int id)
         {
             return await _CityServices.GetCityByIdAsync(id);
         }
 
-        [HttpGet("{cep}")]
-        public async Task<City> GetCityByCepAsync(int cep)
-        {
-            return await _CityServices.GetCityByCepAsync(cep);
-        }
 
-        [HttpGet("{name}")]
+        [HttpGet("[action]")]
         public async Task<City> GetCityByNameAsync(string name)
         {
             return await _CityServices.GetCityByNameAsync(name);

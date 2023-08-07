@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
+	  <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -28,6 +29,7 @@
     <ProjectReference Include="..\developChallenge.Infra\developChallenge.Infra.csproj" />
     <ProjectReference Include="..\developChallenge.Service\developChallenge.Service.csproj" />
     <ProjectReference Include="..\developChallengeDomain\developChallenge.Domain.csproj" />
+    <ProjectReference Include="..\Worker\developChallenge.Worker.csproj" />
   </ItemGroup>
 
 </Project>

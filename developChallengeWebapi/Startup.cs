@@ -27,6 +27,8 @@ namespace developChallenge.Web.Api
                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
             );
 
+
+
             // Other configurations...
         }
 

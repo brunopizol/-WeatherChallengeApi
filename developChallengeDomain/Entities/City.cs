@@ -13,7 +13,7 @@ namespace developChallenge.Domain.Entities
         public string? CityName { get; set; }
         public string? StateCode { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public Clima? Clima { get; set; }
+        public Weather clima { get; set; }
 
 
         #endregion
