@@ -1,3 +1,6 @@
+C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Worker.deps.json
+C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Worker.runtimeconfig.json
+C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Worker.exe
 C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\appsettings.Development.json
 C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\appsettings.json
 C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Web.Api.exe
@@ -37,6 +40,9 @@ C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\Microsoft.OpenApi
 C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\Microsoft.SqlServer.Server.dll
 C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
 C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\Mono.TextTemplating.dll
+C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\MySqlConnector.dll
+C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
 C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -67,9 +73,11 @@ C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\runtimes\win\lib\
 C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Domain.dll
 C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Infra.dll
 C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Service.dll
+C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Worker.dll
 C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Infra.pdb
 C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Service.pdb
 C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Domain.pdb
+C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Worker.pdb
 C:\developChallengeAEC\developChallengeWebapi\obj\Debug\net6.0\developChallenge.Web.Api.csproj.AssemblyReference.cache
 C:\developChallengeAEC\developChallengeWebapi\obj\Debug\net6.0\developChallenge.Web.Api.GeneratedMSBuildEditorConfig.editorconfig
 C:\developChallengeAEC\developChallengeWebapi\obj\Debug\net6.0\developChallenge.Web.Api.AssemblyInfoInputs.cache
@@ -86,11 +94,3 @@ C:\developChallengeAEC\developChallengeWebapi\obj\Debug\net6.0\refint\developCha
 C:\developChallengeAEC\developChallengeWebapi\obj\Debug\net6.0\developChallenge.Web.Api.pdb
 C:\developChallengeAEC\developChallengeWebapi\obj\Debug\net6.0\developChallenge.Web.Api.genruntimeconfig.cache
 C:\developChallengeAEC\developChallengeWebapi\obj\Debug\net6.0\ref\developChallenge.Web.Api.dll
-C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\MySqlConnector.dll
-C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
-C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\Newtonsoft.Json.dll
-C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Worker.deps.json
-C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Worker.runtimeconfig.json
-C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Worker.exe
-C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Worker.dll
-C:\developChallengeAEC\developChallengeWebapi\bin\Debug\net6.0\developChallenge.Worker.pdb

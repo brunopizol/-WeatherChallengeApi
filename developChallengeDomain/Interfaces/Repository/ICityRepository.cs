@@ -9,11 +9,8 @@ namespace developChallenge.Domain.Interfaces.Repository
 {
     public interface ICityRepository
     {
-        Task<IEnumerable<City>> GetListAsync();
-        Task<City> GetAsync(int id);
-        Task AddAsync(City city);
-        void Update(City city);
-        void Delete(City city);
-        Task<bool> SaveChangesAsync();
+
+        Task<bool> AddAsync(City city);
+
     }
 }

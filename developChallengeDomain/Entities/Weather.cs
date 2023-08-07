@@ -15,8 +15,15 @@ namespace developChallenge.Domain.Entities
         public float MaxTemperature { get; set; }
         public float UVIndice { get; set; }
         public string Condition_desc { get; set; }
+        [JsonIgnore]
         public virtual City City { get; set; }
         public int CityId { get; set; }
+
+
+        public Weather()
+        {
+            this.City = new City();
+        }
 
 
     }

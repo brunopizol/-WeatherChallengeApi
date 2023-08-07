@@ -106,8 +106,6 @@ namespace developChallenge.Infra.Context
                       .HasMaxLength(50);
                 entity.Property(e => e.status)
                       .HasMaxLength(50);
-                entity.Property(e => e.CreatedAt)
-                      .HasDefaultValueSql();
             });
 
             //add some datas from airports to make easy the requests from user

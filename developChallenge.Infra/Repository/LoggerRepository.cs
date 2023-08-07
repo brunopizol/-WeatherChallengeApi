@@ -1,5 +1,6 @@
 ﻿using developChallenge.Domain.Entities;
 using developChallenge.Domain.Interfaces.Repository;
+using developChallenge.Infra.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,27 @@ namespace developChallenge.Infra.Repository
 {
     public class LoggerRepository : ILoggerRepository
     {
+        private readonly MyDatabaseContext _dbContext;
 
-        public Task AddLogAsync(Log log)
+        public LoggerRepository(MyDatabaseContext dbContext)
         {
+            _dbContext = dbContext;
+        }
+        public async Task<bool> AddLogAsync(Log log)
+        {
+            log.CreatedAt = DateTime.UtcNow;
+
             
+            _dbContext.Logs.Add(log);
+            var result = await _dbContext.SaveChangesAsync();
+            if (result == 1)
+            {
+                return true;
+
+            }
+
+            return false;
+
         }
 
         public Task<Log> GetAsync(int id)

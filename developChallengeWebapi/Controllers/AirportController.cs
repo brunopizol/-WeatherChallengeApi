@@ -18,13 +18,8 @@ namespace developChallenge.Web.Api.Controllers
         }
         #endregion
 
-        #region Actions
-        [HttpGet("[action]")]
-        public async Task<IEnumerable<Airport>> ListAsync()
-        {
-            return await _AirportServices.GetListAsync();
-        }
 
+        #region Methods
         [HttpGet("[action]")]
         public async Task<Airport> GetAirportByIdAsync(string id)
         {

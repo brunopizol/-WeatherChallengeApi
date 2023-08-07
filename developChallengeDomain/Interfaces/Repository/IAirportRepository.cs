@@ -9,11 +9,7 @@ namespace developChallenge.Domain.Interfaces.Repository
 {
     public interface IAirportRepository
     {
-        Task<IEnumerable<Airport>> GetListAsync();
-        Task<Airport> GetAsync(int id);
-        Task AddAsync(Airport airport);
-        void Update(Airport airport);
-        void Delete(Airport airport);
-        Task<bool> SaveChangesAsync();
+        Task<bool> AddAsync(Airport airport);
+
     }
 }

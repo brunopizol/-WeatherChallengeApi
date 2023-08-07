@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
@@ -19,13 +22,16 @@ namespace developChallenge.Service
     {
         private readonly HttpClient _client;
         private readonly ConsoleLogger _worker;
+        private readonly ICityRepository _cityRepository;
+        private ILoggerRepository _loggerRepository;
 
-        public CityServices(HttpClient client, IAirportInfoRepository airportInfoRepository)
+        public CityServices(HttpClient client, IAirportInfoRepository airportInfoRepository, ICityRepository cityRepository, ILoggerRepository loggerRepository)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
             _client.BaseAddress = new Uri("https://brasilapi.com.br/api/cptec/v1");
             _worker = new ConsoleLogger();
-
+            _cityRepository = cityRepository;
+            _loggerRepository = loggerRepository;
         }
         public Task<City> GetCityByCepAsync(int cep)
         {
@@ -37,12 +43,19 @@ namespace developChallenge.Service
             try
             {
                 _worker.Log(" make request GET: GetCityByIdAsync - DATA: "+ id);                
-                using (var response = await _client.GetAsync($"v1/clima/previsao/{id}"))
+                using (var response = _client.GetAsync($"v1/clima/previsao/{id}").Result)
 
                     if (response.IsSuccessStatusCode)
                     {
+
+                        var settings = new JsonSerializerSettings
+                        {
+                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore, // This setting ignores object cycles
+                            PreserveReferencesHandling = PreserveReferencesHandling.All,
+                            MaxDepth = 64 // Adjust the depth to your needs, default is 32
+                        };
                         var content = await response.Content.ReadAsStringAsync();
-                        var cityDto = JsonConvert.DeserializeObject<CityClimateInfoDTO>(content);
+                        var cityDto = JsonConvert.DeserializeObject<CityClimateInfoDTO>(content, settings);
 
                         // Convert AirportDto to Airport
                         var city = new City
@@ -61,26 +74,41 @@ namespace developChallenge.Service
                             },
                             StateCode = cityDto.estado,
                             UpdatedAt = cityDto.atualizado_em
-                        };
+                        };                        
 
                         string jsonString = System.Text.Json.JsonSerializer.Serialize(city);
                         _worker.Log(" make request GET: GetCityByIdAsync - RESULT: " + jsonString);
+                        _cityRepository.AddAsync(city);
                         return city;
                     }
                     else
                     {
-                        // Lidar com o caso em que a solicitação não foi bem-sucedida (por exemplo, erro 404, 500, etc.).
-                        // Retornar nulo ou lançar uma exceção, dependendo do comportamento desejado.
+
+
+                        _loggerRepository.AddLogAsync(new Log
+                        {
+                            Action = "CityRepository - GetCityByIdAsync",
+                            CreatedAt = DateTime.Now,
+                            Description = "error on reponse: "+response.IsSuccessStatusCode,
+                            status = "Error"
+                        });
                         _worker.Log(" make request GET: GetCityByIdAsync - ERROR: " + response);
                         return null;
                     }
             }
             catch (Exception ex)
             {
+
                 _worker.Log(" ERROR - "+ex.Message);
-                // Lidar com exceções que possam ocorrer durante a solicitação HTTP.
-                // Retornar nulo ou lançar uma exceção, dependendo do comportamento desejado.
-                return null;
+                _loggerRepository.AddLogAsync(new Log
+                {
+                    Action = "CityRepository - GetCityByIdAsync",
+                    CreatedAt = DateTime.Now,
+                    Description = ex.Message,
+                    status = "Error"
+                });
+                
+                throw ex;
             }
 
         }
@@ -94,7 +122,7 @@ namespace developChallenge.Service
                 HttpClient _temporaryClient;
                 _temporaryClient = new HttpClient();
                 _temporaryClient.BaseAddress = new Uri("http://servicos.cptec.inpe.br/");
-                var response = await _temporaryClient.GetAsync($"XML/listaCidades?city={Uri.EscapeDataString(name)}");
+                var response =  _temporaryClient.GetAsync($"XML/listaCidades?city={Uri.EscapeDataString(name)}").Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -111,28 +139,41 @@ namespace developChallenge.Service
                         cityDTO = (CityDTO)serializer.Deserialize(stringReader);
                     }
 
-                    if (cityDTO == null || cityDTO.Cidades.FirstOrDefault().id == null)
-                        return null;
+                    if (cityDTO == null || cityDTO.Cidades.Count()==0)
+                        throw new HttpRequestException("City not found on database", null, HttpStatusCode.NotFound);
 
                     // Access the properties of the cidade object within cityDTO
 
-                    var result = await this.GetCityByIdAsync(cityDTO.Cidades.FirstOrDefault().id);
+                    var result = this.GetCityByIdAsync(cityDTO.Cidades.FirstOrDefault().id).Result;
                     _worker.Log(" make request GET: GetCityByNameAsync - RESULT: " + result);
                     return result;
                 }
                 else
                 {
-                    // Lidar com o caso em que a solicitação não foi bem-sucedida (por exemplo, erro 404, 500, etc.).
-                    // Retornar nulo ou lançar uma exceção, dependendo do comportamento desejado.
+       
                     _worker.Log(" make request GET: GetCityByNameAsync - ERROR: " + response);
+                    _loggerRepository.AddLogAsync(new Log
+                    {
+                        Action = "CityRepository - GetCityByNameAsync",
+                        CreatedAt = DateTime.Now,
+                        Description = "error on reponse: " + response.IsSuccessStatusCode,
+                        status = "Error"
+                    });
                     return null;
                 }
             }
             catch (Exception ex)
             {
                 _worker.Log(" ERROR - " + ex.Message);
-                // Lidar com exceções que possam ocorrer durante a solicitação HTTP.
-                // Retornar nulo ou lançar uma exceção, dependendo do comportamento desejado.
+
+                
+                _loggerRepository.AddLogAsync(new Log
+                {
+                    Action = "CityRepository - GetCityByNameAsync",
+                    CreatedAt = DateTime.Now,
+                    Description = ex.Message,
+                    status = "Error"
+                });
                 return null;
             }
 

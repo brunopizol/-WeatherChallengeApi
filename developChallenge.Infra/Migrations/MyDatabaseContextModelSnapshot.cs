@@ -618,39 +618,69 @@ namespace developChallenge.Infra.Migrations
                     b.ToTable("Cities");
                 });
 
-            modelBuilder.Entity("developChallenge.Domain.Entities.Clima", b =>
+            modelBuilder.Entity("developChallenge.Domain.Entities.Log", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("varchar(300)");
+
+                    b.Property<string>("status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Logs");
+                });
+
+            modelBuilder.Entity("developChallenge.Domain.Entities.Weather", b =>
                 {
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Condicao")
+                    b.Property<string>("Condition")
                         .HasColumnType("longtext");
 
-                    b.Property<float>("Condicao_desc")
-                        .HasColumnType("float");
+                    b.Property<string>("Condition_desc")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
-                    b.Property<DateTime>("Data")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<float>("Indice_uv")
+                    b.Property<float>("MaxTemperature")
                         .HasColumnType("float");
 
-                    b.Property<float>("Max")
+                    b.Property<float>("MinTemperature")
                         .HasColumnType("float");
 
-                    b.Property<float>("Min")
+                    b.Property<float>("UVIndice")
                         .HasColumnType("float");
 
                     b.HasKey("CityId");
 
-                    b.ToTable("Clima");
+                    b.ToTable("Climas");
                 });
 
-            modelBuilder.Entity("developChallenge.Domain.Entities.Clima", b =>
+            modelBuilder.Entity("developChallenge.Domain.Entities.Weather", b =>
                 {
                     b.HasOne("developChallenge.Domain.Entities.City", "City")
-                        .WithOne("Clima")
-                        .HasForeignKey("developChallenge.Domain.Entities.Clima", "CityId")
+                        .WithOne("clima")
+                        .HasForeignKey("developChallenge.Domain.Entities.Weather", "CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -659,7 +689,8 @@ namespace developChallenge.Infra.Migrations
 
             modelBuilder.Entity("developChallenge.Domain.Entities.City", b =>
                 {
-                    b.Navigation("Clima");
+                    b.Navigation("clima")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

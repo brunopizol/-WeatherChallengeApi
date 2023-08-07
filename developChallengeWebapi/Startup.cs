@@ -15,7 +15,7 @@ namespace developChallenge.Web.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // Other configurations...
+            
             //sql server
             //var connectionString = Configuration.GetConnectionString("DefaultConnection");
             //services.AddDbContext<MyDatabaseContext>(options =>
@@ -28,8 +28,6 @@ namespace developChallenge.Web.Api
             );
 
 
-
-            // Other configurations...
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -10,6 +10,6 @@ namespace developChallenge.Domain.Interfaces.Repository
     public interface ILoggerRepository
     {
         Task<Log> GetAsync(int id);        
-        Task AddLogAsync(Log log);
+        Task<bool> AddLogAsync(Log log);
     }
 }

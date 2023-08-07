@@ -31,6 +31,8 @@ builder.Services.AddDbContext<MyDatabaseContext>(options =>
 builder.Services.AddScoped<IAirportServices, AirportServices>();
 builder.Services.AddScoped<ICityServices, CityServices>();
 builder.Services.AddScoped<IAirportInfoRepository, AirportInfoRepository>();
+builder.Services.AddScoped<IAirportRepository, AirportRepository>();
+builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddScoped<ILoggerRepository, LoggerRepository>();
 // Add HttpClient
 builder.Services.AddHttpClient();
