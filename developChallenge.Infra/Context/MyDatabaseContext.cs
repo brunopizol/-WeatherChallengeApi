@@ -1,5 +1,6 @@
 ﻿using developChallenge.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +19,8 @@ namespace developChallenge.Infra.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                //sql server
-                //optionsBuilder.UseSqlServer("Server=localhost;Database=brasilAPI;Uid=root;Pwd=testedev12345;");
-                string connectionString = "server=localhost;port=3306;database=brasilapi;user=root;password=testedev12345";
-                optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-            }
+
+            
 
         }
         #endregion
@@ -46,7 +42,16 @@ namespace developChallenge.Infra.Context
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Airport>()
-            .HasKey(a => a.Id); 
+            .HasKey(a => a.Id);
+
+            modelBuilder.Entity<Log>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.status).IsRequired();
+                entity.Property(e => e.CreatedAt).IsRequired();
+                entity.Property(e => e.Description).IsRequired();
+                entity.Property(e => e.Action).IsRequired();
+            });
 
             modelBuilder.Entity<Airport>(entity =>
             {
@@ -57,12 +62,14 @@ namespace developChallenge.Infra.Context
                       .HasMaxLength(50);
                 entity.Property(e => e.CondicaoDesc)
                       .HasMaxLength(100);
+                entity.Property(e => e.AtualizadoEm).HasColumnType("datetime2");
             });
 
             modelBuilder.Entity<City>(entity =>
             {
                 
-                entity.HasKey(e => e.Id);        
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.cityId);
                 entity.Property(e => e.CityName)
                       .HasMaxLength(100);
 

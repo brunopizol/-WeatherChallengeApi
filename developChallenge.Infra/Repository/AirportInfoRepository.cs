@@ -11,9 +11,7 @@ namespace developChallenge.Infra.Repository
 {
     public class AirportInfoRepository : IAirportInfoRepository
     {
-        private readonly MyDatabaseContext _dbContext;
-        //private readonly LoggerRepository _loggerRepository;
-
+        private readonly MyDatabaseContext _dbContext;        
 
         public AirportInfoRepository(MyDatabaseContext dbContext
                                   )
@@ -36,13 +34,7 @@ namespace developChallenge.Infra.Repository
             }
             catch (Exception ex)
             {
-                //_loggerRepository.AddAsync(new Log
-                //{
-                //    Action = "Task<AirportInfo> GetByNameAsync",
-                //    DescriptionError = ex.Message,
-
-                //});
-                throw;
+                throw ex;
             }
         }
     }

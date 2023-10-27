@@ -10,11 +10,13 @@ namespace developChallenge.Web.Api.Controllers
     {
         #region Variables
         private readonly IAirportServices _AirportServices;
+        private readonly ILogger<AirportController> _logger;
         #endregion
         #region Constructors
-        public AirportController(IAirportServices airportServices)
+        public AirportController(IAirportServices airportServices, ILogger<AirportController> logger)
         {
             _AirportServices = airportServices;
+            _logger = logger;
         }
         #endregion
 
@@ -23,12 +25,14 @@ namespace developChallenge.Web.Api.Controllers
         [HttpGet("[action]")]
         public async Task<Airport> GetAirportByIdAsync(string id)
         {
+            _logger.LogInformation("Received a GET request. [GetAirportByIdAsync]");
             return await _AirportServices.GetAirportByIdAsync(id);
         }
 
         [HttpGet("[action]")]
         public async Task<Airport> GetAirportByNameAsync(string name)
         {
+            _logger.LogInformation("Received a GET request. [GetAirportByNameAsync]");
             return await _AirportServices.GetAirportByNameAsync(name);
         }
         #endregion

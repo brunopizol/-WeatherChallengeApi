@@ -10,7 +10,7 @@ namespace developChallenge.Domain.Interfaces.Repository
     public interface ICityRepository
     {
 
-        Task<bool> AddAsync(City city);
+        Task<bool> AddAsync(List<City> city);
 
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace developChallenge.Infra.Repository
 {
@@ -23,42 +24,53 @@ namespace developChallenge.Infra.Repository
             _loggerRepository = loggerRepository;
 
         }
-        public async Task<bool> AddAsync(City city)
+        public async Task<bool> AddAsync(List<City> city)
         {
-            try
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                _dbContext.Cities.Add(city);
-                var result = _dbContext.SaveChangesAsync().Result;
-                if (result == 2)
+                try
                 {
-                    _loggerRepository.AddLogAsync(new Log
+                    foreach (City cityItem in city)
+                    {
+
+                        _dbContext.Cities.Add(cityItem);
+                    }
+                    var result = await _dbContext.SaveChangesAsync();
+                    scope.Complete();
+                    if (result >0)
+                    {
+                        await _loggerRepository.AddLogAsync(new Log
+                        {
+                            Action = "CityRepository - AddAsync",
+                            CreatedAt = DateTime.Now,
+                            Description = "Adding city to database",
+                            status = "Success"
+                        });
+                        return true;
+
+                    }
+
+                    await _loggerRepository.AddLogAsync(new Log
                     {
                         Action = "CityRepository - AddAsync",
                         CreatedAt = DateTime.Now,
-                        Description = "Adding city to database",
-                        status = "Success"
+                        Description = "Adding airport to database",
+                        status = "Error"
                     });
-                    return true;
-
+                    return false;
                 }
-                _loggerRepository.AddLogAsync(new Log
+                catch (Exception ex)
                 {
-                    Action = "CityRepository - AddAsync",
-                    CreatedAt = DateTime.Now,
-                    Description = "Adding airport to database",
-                    status = "Error"
-                });
-                return false;
-            }catch(Exception ex)
-            {
-                _loggerRepository.AddLogAsync(new Log
-                {
-                    Action = "CityRepository - AddAsync",
-                    CreatedAt = DateTime.Now,
-                    Description = " ERROR: " + ex.Message,
-                    status = "Error"
-                });
-                throw ex;
+                    scope.Dispose();
+                    await _loggerRepository.AddLogAsync(new Log
+                    {
+                        Action = "CityRepository - AddAsync",
+                        CreatedAt = DateTime.Now,
+                        Description = " ERROR: " + ex.Message,
+                        status = "Error"
+                    });
+                    throw ex;
+                }
             }
         }
 

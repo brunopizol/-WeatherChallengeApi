@@ -6,6 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dapper;
+using System.Data;
+using System.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using System.Transactions;
 
 namespace developChallenge.Infra.Repository
 {
@@ -17,26 +22,37 @@ namespace developChallenge.Infra.Repository
         {
             _dbContext = dbContext;
         }
+
         public async Task<bool> AddLogAsync(Log log)
         {
-            log.CreatedAt = DateTime.UtcNow;
-
-            
-            _dbContext.Logs.Add(log);
-            var result = await _dbContext.SaveChangesAsync();
-            if (result == 1)
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                return true;
+                
+                try
+                {
 
+                    _dbContext.Logs.Add(log);
+
+                    var result = await _dbContext.SaveChangesAsync();
+                    scope.Complete();
+                    if (result > 0)
+                    {
+                        Console.WriteLine("Record inserted successfully.");                        
+                        return true;
+
+                    }
+                   
+                }
+                catch (Exception ex)
+                {
+                    scope.Dispose();
+                    throw new Exception(ex.Message);
+                }
             }
-
             return false;
 
+
         }
 
-        public Task<Log> GetAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

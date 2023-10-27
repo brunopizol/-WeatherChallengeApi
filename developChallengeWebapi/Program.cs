@@ -1,3 +1,4 @@
+using developChallenge.Domain.Entities;
 using developChallenge.Domain.Interfaces.Repository;
 using developChallenge.Domain.Interfaces.Services;
 using developChallenge.Infra.Context;
@@ -6,10 +7,16 @@ using developChallenge.Service;
 using developChallenge.Web.Api;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 
 System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 var builder = WebApplication.CreateBuilder(args);
-var logger = CreateLogger();
+
+Serilog.Log.Logger = new LoggerConfiguration()
+            .WriteTo.Console()
+            .CreateLogger();
+    
 // Add services to the container.
 Console.WriteLine("hello world");
 builder.Services.AddControllers();
@@ -20,12 +27,12 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 //SQL Server
-//builder.Services.AddDbContext<MyDatabaseContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Transient);
+builder.Services.AddDbContext<MyDatabaseContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Transient);
 
-builder.Services.AddDbContext<MyDatabaseContext>(options =>
-{
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-}, ServiceLifetime.Transient);
+//builder.Services.AddDbContext<MyDatabaseContext>(options =>
+//{
+//    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+//}, ServiceLifetime.Transient);
 
 // Register the implementation of IAirportServices
 builder.Services.AddScoped<IAirportServices, AirportServices>();
@@ -41,7 +48,11 @@ builder.Services.AddHttpClient();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.AddConsole(); // Enable console logging
+    loggingBuilder.AddDebug();   // Enable debugging window logging
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -53,6 +64,13 @@ if (app.Environment.IsDevelopment())
 
 app.Use(async (context, next) =>
 {
+    Serilog.Log.Information($"Received request: {context.Request.Method} {context.Request.Path}");
+    await next();
+});
+
+app.Use(async (context, next) =>
+{
+    var logger = context.RequestServices.GetRequiredService<ILogger<Startup>>();
     logger.LogInformation($"Received request: {context.Request.Method} {context.Request.Path}");
 
     try
@@ -64,6 +82,13 @@ app.Use(async (context, next) =>
         logger.LogError(ex, "An unhandled exception occurred.");
         throw; // Rethrow the exception to let ASP.NET Core handle it
     }
+});
+app.Use(async (context, next) =>
+{
+    await next();
+    var logger = context.RequestServices.GetRequiredService<ILogger<Startup>>();
+    logger.LogInformation($"Response status code: {context.Response.StatusCode}");
+    // You can log more response details as needed
 });
 
 app.UseHttpsRedirection();
@@ -85,10 +110,3 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
                 logging.AddConsole(); // Add the console logger
             });
 
-static ILogger CreateLogger()
-{
-    return LoggerFactory.Create(builder =>
-    {
-        builder.AddConsole(); // You can add other log providers if needed
-    }).CreateLogger("MyApp"); // Replace "MyApp" with your desired logger name
-}

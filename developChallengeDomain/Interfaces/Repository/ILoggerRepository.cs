@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 namespace developChallenge.Domain.Interfaces.Repository
 {
     public interface ILoggerRepository
-    {
-        Task<Log> GetAsync(int id);        
+    {    
         Task<bool> AddLogAsync(Log log);
     }
 }

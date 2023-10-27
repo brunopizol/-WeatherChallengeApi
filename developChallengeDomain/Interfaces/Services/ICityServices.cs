@@ -9,10 +9,11 @@ namespace developChallenge.Domain.Interfaces.Services
 {
     public interface ICityServices
     {
-       
-        Task<City> GetCityByIdAsync(int id);
+
+        Task<List<City>> GetCityByIdAsync(List<City> cities);
+        Task<List<City>> GetCityByIdAsync(int id);
         Task<City> GetCityByCepAsync(int cep);
-        Task<City> GetCityByNameAsync(string name);
+        Task<IEnumerable<City>> GetCityByNameAsync(string name);
 
     }
 }

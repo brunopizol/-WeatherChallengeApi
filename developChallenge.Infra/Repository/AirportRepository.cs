@@ -30,7 +30,7 @@ namespace developChallenge.Infra.Repository
             var result = await _dbContext.SaveChangesAsync();
             if (result == 1)
             {
-                _loggerRepository.AddLogAsync(new Log
+                await _loggerRepository.AddLogAsync(new Log
                 {
                     Action = "AirportRepository - AddAsync",
                     CreatedAt = DateTime.Now,
@@ -40,7 +40,8 @@ namespace developChallenge.Infra.Repository
                 return true;
 
             }
-            _loggerRepository.AddLogAsync(new Log
+
+            await _loggerRepository.AddLogAsync(new Log
             {
                 Action = "AirportRepository - AddAsync",
                 CreatedAt = DateTime.Now,

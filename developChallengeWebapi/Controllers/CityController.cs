@@ -10,11 +10,13 @@ namespace developChallenge.Web.Api.Controllers
     {
         #region Variables
         private readonly ICityServices _CityServices;
+        private readonly ILogger<cityController> _logger;
         #endregion
         #region Constructors
-        public cityController(ICityServices cityServices)
+        public cityController(ICityServices cityServices, ILogger<cityController> logger)
         {
             _CityServices = cityServices;
+            _logger = logger;
         }
         #endregion
 
@@ -22,15 +24,17 @@ namespace developChallenge.Web.Api.Controllers
 
 
         [HttpGet("[action]")]
-        public async Task<City> GetCityByIdAsync(int id)
+        public async Task<IEnumerable<City>> GetCityByIdAsync(int id)
         {
+            _logger.LogInformation("Received a GET request. [GetCityByIdAsync]");
             return await _CityServices.GetCityByIdAsync(id);
         }
 
 
         [HttpGet("[action]")]
-        public async Task<City> GetCityByNameAsync(string name)
+        public async Task<IEnumerable<City>> GetCityByNameAsync(string name)
         {
+            _logger.LogInformation("Received a GET request. [GetCityByNameAsync]");
             return await _CityServices.GetCityByNameAsync(name);
         }
         #endregion
