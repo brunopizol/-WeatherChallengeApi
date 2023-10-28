@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "developChallenge.Service", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "developChallenge.Worker", "Worker\developChallenge.Worker.csproj", "{37509094-A007-407A-A309-C5E538137B12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "developChallenge.UnitTests", "developChallenge.UnitTests\developChallenge.UnitTests.csproj", "{9D321C4E-D87D-40CD-8A81-46200169E46A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "developChallenge.UnitTests", "developChallenge.UnitTests\developChallenge.UnitTests.csproj", "{9D321C4E-D87D-40CD-8A81-46200169E46A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,7 +1,9 @@
 ﻿using developChallenge.Domain.Entities;
+using developChallenge.Domain.Interfaces.Repository;
 using developChallenge.Infra.Context;
 using developChallenge.Infra.Repository;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,105 +17,96 @@ namespace developChallenge.UnitTests.Repository
     {
 
         [Fact]
-        public async Task AddAsync_SingleCity_ShouldAddToDatabase()
+        public async Task AddAsync_Success()
         {
             // Arrange
-            var dbContextOptions = new DbContextOptionsBuilder<MyDatabaseContext>()
-                .UseInMemoryDatabase(databaseName: "InMemoryCityDatabase")
-                .Options;
+            var dbContext = new Mock<MyDatabaseContext>();
+            var loggerRepository = new Mock<ILoggerRepository>();
 
-            using (var dbContext = new MyDatabaseContext(dbContextOptions))
-            {
-                var repository = new CityRepository(dbContext, loggerRepository: null);
+            var cityRepository = new CityRepository(dbContext.Object, loggerRepository.Object);
 
-                // Act
-                var city = new City
-                {
-                    Id = 1,
-                    cityId=1,
-                    CityName="passos",
-                    clima = new Weather
-                    {
-                        Condition="pn",
-                        Condition_desc="nublado",
-                        Date=new DateTime(),
-                        MaxTemperature= 24,
-                        MinTemperature=16,
-                        UVIndice=3,
-                    },
-                    StateCode="MG",
-                    UpdatedAt=new DateTime(),
+            var cities = new List<City>
+        {
+            new City { CityName = "City1" },
+            new City { CityName = "City2" }
+        };
 
-                };
-                await repository.AddAsync(new List<City> { city });
+            dbContext.Setup(d => d.Cities.Add(It.IsAny<City>())).Verifiable();
+            dbContext.Setup(d => d.SaveChangesAsync(default)).ReturnsAsync(2); // Assuming 2 entities were added successfully
 
-                // Assert
-                var citiesInDatabase = await dbContext.Cities.ToListAsync();
-                Assert.Single(citiesInDatabase); // Ensure there's only one city in the database
-                Assert.Equal(city.CityName, citiesInDatabase[0].CityName); // Validate other properties
-            }
+            loggerRepository.Setup(l => l.AddLogAsync(It.IsAny<Log>())).ReturnsAsync(true);
+
+            // Act
+            var result = await cityRepository.AddAsync(cities);
+
+            // Assert
+            Assert.True(result); // The operation should be successful
+
+            dbContext.Verify(d => d.Cities.Add(It.IsAny<City>()), Times.Exactly(2)); // Ensure that the entities were added
+            dbContext.Verify(d => d.SaveChangesAsync(default), Times.Once); // Ensure that SaveChangesAsync was called
+
+            loggerRepository.Verify(l => l.AddLogAsync(It.IsAny<Log>()), Times.Once); // Ensure that the log was added
         }
 
         [Fact]
-        public async Task AddAsync_MultipleCities_ShouldAddToDatabase()
+        public async Task AddAsync_Failure()
         {
             // Arrange
-            var dbContextOptions = new DbContextOptionsBuilder<MyDatabaseContext>()
-                .UseInMemoryDatabase(databaseName: "InMemoryCityDatabase")
-                .Options;
+            var dbContext = new Mock<MyDatabaseContext>();
+            var loggerRepository = new Mock<ILoggerRepository>();
 
-            using (var dbContext = new MyDatabaseContext(dbContextOptions))
-            {
-                var repository = new CityRepository(dbContext, loggerRepository: null);
+            var cityRepository = new CityRepository(dbContext.Object, loggerRepository.Object);
 
-                // Act
-                var cities = new List<City>
-                {
-                    new City
-                    {
-                       Id = 1,
-                    cityId=1,
-                    CityName="passos",
-                    clima = new Weather
-                    {
-                        Condition="pn",
-                        Condition_desc="nublado",
-                        Date=new DateTime(),
-                        MaxTemperature= 24,
-                        MinTemperature=16,
-                        UVIndice=3,
-                    },
-                    StateCode="MG",
-                    UpdatedAt=new DateTime(),
-                    },
-                    new City
-                    {
-                        Id = 2,
-                    cityId=2,
-                    CityName="varginha",
-                    clima = new Weather
-                    {
-                        Condition="pn",
-                        Condition_desc="nublado",
-                        Date=new DateTime(),
-                        MaxTemperature= 24,
-                        MinTemperature=16,
-                        UVIndice=3,
-                    },
-                    StateCode="MG",
-                    UpdatedAt=new DateTime(),
-                    }
-                };
+            var cities = new List<City>
+        {
+            new City { CityName = "City1" }
+        };
 
-                await repository.AddAsync(cities);
+            dbContext.Setup(d => d.Cities.Add(It.IsAny<City>())).Verifiable();
+            dbContext.Setup(d => d.SaveChangesAsync(default)).ReturnsAsync(0); // Assuming no entities were added
 
-                // Assert
-                var citiesInDatabase = await dbContext.Cities.ToListAsync();
-                Assert.Equal(2, citiesInDatabase.Count); // Ensure both cities are in the database
-                Assert.Equal(cities[0].CityName, citiesInDatabase[0].CityName); // Validate properties
-                Assert.Equal(cities[1].CityName, citiesInDatabase[1].CityName); // Validate properties of the second city
-            }
+            loggerRepository.Setup(l => l.AddLogAsync(It.IsAny<Log>())).ReturnsAsync(true);
+
+            // Act
+            var result = await cityRepository.AddAsync(cities);
+
+            // Assert
+            Assert.False(result); // The operation should fail
+
+            dbContext.Verify(d => d.Cities.Add(It.IsAny<City>()), Times.Once); // Ensure that the entity was added
+            dbContext.Verify(d => d.SaveChangesAsync(default), Times.Once); // Ensure that SaveChangesAsync was called
+
+            loggerRepository.Verify(l => l.AddLogAsync(It.IsAny<Log>()), Times.Once); // Ensure that the log was added
         }
 
+        [Fact]
+        public async Task AddAsync_Exception()
+        {
+            // Arrange
+            var dbContext = new Mock<MyDatabaseContext>();
+            var loggerRepository = new Mock<ILoggerRepository>();
+
+            var cityRepository = new CityRepository(dbContext.Object, loggerRepository.Object);
+
+            var cities = new List<City>
+        {
+            new City {  CityName = "City1" }
+        };
+
+            dbContext.Setup(d => d.Cities.Add(It.IsAny<City>())).Verifiable();
+            dbContext.Setup(d => d.SaveChangesAsync(default)).ThrowsAsync(new Exception("Simulated error"));
+
+            loggerRepository.Setup(l => l.AddLogAsync(It.IsAny<Log>()))
+            .Callback<Log>(log => log.status = "Success")
+            .ReturnsAsync(true);
+
+            // Act & Assert
+            await Assert.ThrowsAsync<Exception>(() => cityRepository.AddAsync(cities));
+
+            dbContext.Verify(d => d.Cities.Add(It.IsAny<City>()), Times.Once); // Ensure that the entity was added
+            dbContext.Verify(d => d.SaveChangesAsync(default), Times.Once); // Ensure that SaveChangesAsync was called
+
+            loggerRepository.Verify(l => l.AddLogAsync(It.IsAny<Log>()), Times.Once); // Ensure that the log was added
+        }
     }
 }

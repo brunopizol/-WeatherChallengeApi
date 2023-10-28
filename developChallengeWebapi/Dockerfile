@@ -1,22 +1,29 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+# Imagem de compilação
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
-COPY ["developChallengeWebapi/developChallengeWebapi.csproj", "developChallengeWebapi/"]
-RUN dotnet restore "developChallengeWebapi/developChallengeWebapi.csproj"
+# Copiar projeto e restaurar pacotes
+COPY developChallengeWebapi/*.csproj ./developChallengeWebapi/
+COPY developChallengeDomain/*.csproj ./developChallengeDomain/
+COPY developChallenge.Infra/*.csproj ./developChallenge.Infra/
+COPY developChallenge.Service/*.csproj ./developChallenge.Service/
+COPY developChallenge.UnitTests/*.csproj ./developChallenge.UnitTests/
+COPY Worker/*.csproj ./Worker/
+RUN dotnet restore developChallengeWebapi/developChallenge.Web.Api.csproj
+
+# Copiar todo o código
 COPY . .
-WORKDIR "/src/developChallengeWebapi"
-RUN dotnet build "developChallengeWebapi.csproj" -c Release -o /app/build
 
-FROM build AS publish
-RUN dotnet publish "developChallengeWebapi.csproj" -c Release -o /app/publish
+# Compilar e publicar a aplicação
+RUN dotnet publish developChallengeWebapi/developChallenge.Web.Api.csproj -c Release -o out
 
-FROM base AS final
+# Imagem final
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "developChallengeWebapi.dll"]
+COPY --from=build-env /app/out ./
+
+# Expor porta
+EXPOSE 80
+
+# Comando para iniciar o container
+ENTRYPOINT ["dotnet", "developChallenge.Web.Api.dll"]

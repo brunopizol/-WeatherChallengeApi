@@ -69,7 +69,7 @@ namespace developChallenge.Infra.Repository
                         Description = " ERROR: " + ex.Message,
                         status = "Error"
                     });
-                    throw ex;
+                    throw;
                 }
             }
         }

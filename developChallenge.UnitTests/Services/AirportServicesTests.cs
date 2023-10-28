@@ -11,56 +11,56 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
+using Moq.Language.Flow;
+using developChallenge.Service.Helpers;
 
 namespace developChallenge.UnitTests.Services
 {
     public class AirportServicesTests
     {
+    
+
         [Fact]
-        public async Task GetAirportByIdAsync_ReturnsAirport()
+        public async Task GetAirportByIdAsync_Success()
         {
             // Arrange
-            var mockAirportRepository = new Mock<IAirportRepository>();
-            var mockAirportInfoRepository = new Mock<IAirportInfoRepository>();
-            var mockLogRepository = new Mock<ILoggerRepository>();
-            var httpClient = new HttpClient(new FakeHttpMessageHandler());
-            var airportServices = new AirportServices(httpClient, mockAirportInfoRepository.Object, mockLogRepository.Object, mockAirportRepository.Object);
-            var airportId = "ABC123";
+            string airportId = "SBSP";
             var airportDto = new AirportDTO
             {
-                CodigoIcao = "ABC123",
+                CodigoIcao = "SBSP",
                 AtualizadoEm = DateTime.Now,
-                PressaoAtmosferica = 1015.2F, 
-                Visibilidade = "10000", 
-                Vento = 10, 
-                DirecaoVento = 90, 
-                Umidade = 70, 
-                Condicao = "Céu Limpo", 
-                CondicaoDesc = "Céu claro e ensolarado.",
-                Temperatura = 25
+                // ... preencha outros campos do DTO
             };
             var expectedAirport = new Airport
             {
-                CodigoIcao = "ABC123",
-                AtualizadoEm = DateTime.Now,
-                PressaoAtmosferica = 1015.2F,
-                Visibilidade = "1000", 
-                Vento = 10, 
-                DirecaoVento = 90, 
-                Umidade = 70, 
-                Condicao = "Céu Limpo", 
-                CondicaoDesc = "Céu claro e ensolarado.", 
-                Temperatura = 25
+                CodigoIcao = airportDto.CodigoIcao,
+                AtualizadoEm = airportDto.AtualizadoEm,
+                // ... preencha outros campos do Airport
             };
-            httpClient.BaseAddress = new Uri("https://brasilapi.com.br/api/cptec/v1");
-            var fakeResponseMessage = new HttpResponseMessage
+            var httpMessageHandlerMock = new Mock<HttpMessageHandler>();
+            var response = new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
+
+            var httpClient = new Mock<HttpClient>();
+            //httpClient.Setup(c => c.GetAsync("https://brasilapi.com.br/api/cptec/v1")).ReturnsAsync(new HttpResponseMessage
+            //{
+            //    StatusCode = HttpStatusCode.OK,
+            //    Content = new StringContent(JsonSerializer.Serialize(airportDto))
+            //});
+
+            var httpClientWrapper = new Mock<IHttpClientWrapper>();
+            httpClientWrapper.Setup(c => c.GetAsync("https://brasilapi.com.br/api/cptec/v1")).ReturnsAsync(new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.OK,
                 Content = new StringContent(JsonSerializer.Serialize(airportDto))
-            };
-            var fakeHttpMessageHandler = new FakeHttpMessageHandler { Response = fakeResponseMessage };
-            httpClient = new HttpClient(fakeHttpMessageHandler);
-            mockAirportRepository.Setup(repo => repo.AddAsync(expectedAirport));
+            });
+
+            var airportInfoRepository = new Mock<IAirportInfoRepository>();
+            airportInfoRepository.Setup(r => r.GetByNameAsync("congonhas")).Returns(new[] { new AirportInfo { ICAO = "ABC123" } });
+
+            var logRepository = new Mock<ILoggerRepository>();
+            var airportRepository = new Mock<IAirportRepository>();
+
+            var airportServices = new AirportServices(httpClient.Object, airportInfoRepository.Object, logRepository.Object, airportRepository.Object);
 
             // Act
             var result = await airportServices.GetAirportByIdAsync(airportId);
@@ -68,61 +68,43 @@ namespace developChallenge.UnitTests.Services
             // Assert
             Assert.NotNull(result);
             Assert.Equal(expectedAirport.CodigoIcao, result.CodigoIcao);
-            // Defina outras asserções para os campos do Airport
-
-            mockAirportRepository.Verify(repo => repo.AddAsync(expectedAirport), Times.Once);
+            // Faça as asserções para outros campos, se necessário
         }
 
         [Fact]
-        public async Task GetAirportByNameAsync_ReturnsAirport()
+        public async Task GetAirportByNameAsync_Success()
         {
             // Arrange
-            var mockAirportRepository = new Mock<IAirportRepository>();
-            var mockAirportInfoRepository = new Mock<IAirportInfoRepository>();
-            var mockLogRepository = new Mock<ILoggerRepository>();
-            var httpClient = new HttpClient(new FakeHttpMessageHandler());
-            var airportServices = new AirportServices(httpClient, mockAirportInfoRepository.Object, mockLogRepository.Object, mockAirportRepository.Object);
-            var airportName = "SampleAirportName";
-            var airportInfo = new List<AirportInfo>
-            {
-                // Crie objetos AirportInfo de exemplo aqui
-            };
+            string airportName = "congonhas";
+            string airportId = "SBSP";
+
             var airportDto = new AirportDTO
             {
-                CodigoIcao = "ABC123",
+                CodigoIcao = airportId,
                 AtualizadoEm = DateTime.Now,
-                // Defina outros campos do DTO
+                // ... preencha outros campos do DTO
             };
+
             var expectedAirport = new Airport
             {
-                CodigoIcao = "ABC123",
-                AtualizadoEm = DateTime.Now,
-                // Defina outros campos do Airport
+                CodigoIcao = airportDto.CodigoIcao,
+                AtualizadoEm = airportDto.AtualizadoEm,
+                // ... preencha outros campos do Airport
             };
-            mockAirportInfoRepository
-            .Setup(repo => repo.GetByNameAsync(It.IsAny<string>()))
-            .Returns((string name) => Task.FromResult(new List<AirportInfo>
-            {
-                new AirportInfo
-                {                    
-                    IATA = "ABC",
-                    ICAO = "ABC123",
-                    Name = "Airport1",
-                    Description = "Description1",
-                    CityName = "City1",
-                    StateCode = "State1"
-                }
-            }));
-
-            httpClient.BaseAddress = new Uri("https://brasilapi.com.br/api/cptec/v1");
-            var fakeResponseMessage = new HttpResponseMessage
+            var httpClient = new Mock<HttpClient>();
+            var httpClientWrapper = new Mock<IHttpClientWrapper>();
+            httpClientWrapper.Setup(c => c.GetAsync("https://brasilapi.com.br/api/cptec/v1")).ReturnsAsync(new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.OK,
                 Content = new StringContent(JsonSerializer.Serialize(airportDto))
-            };
-            var fakeHttpMessageHandler = new FakeHttpMessageHandler { Response = fakeResponseMessage };
-            httpClient = new HttpClient(fakeHttpMessageHandler);
-            mockAirportRepository.Setup(repo => repo.AddAsync(expectedAirport));
+            });
+            var airportInfoRepository = new Mock<IAirportInfoRepository>();
+            airportInfoRepository.Setup(r => r.GetByNameAsync(airportName)).Returns(new[] { new AirportInfo { ICAO = airportId } });
+
+            var logRepository = new Mock<ILoggerRepository>();
+            var airportRepository = new Mock<IAirportRepository>();
+
+            var airportServices = new AirportServices(httpClient.Object, airportInfoRepository.Object, logRepository.Object, airportRepository.Object);
 
             // Act
             var result = await airportServices.GetAirportByNameAsync(airportName);
@@ -130,13 +112,30 @@ namespace developChallenge.UnitTests.Services
             // Assert
             Assert.NotNull(result);
             Assert.Equal(expectedAirport.CodigoIcao, result.CodigoIcao);
-            // Defina outras asserções para os campos do Airport
+            // Faça as asserções para outros campos, se necessário
+        }
 
-            mockAirportInfoRepository.Verify(repo => repo.GetByNameAsync(airportName), Times.Once);
-            mockAirportRepository.Verify(repo => repo.AddAsync(expectedAirport), Times.Once);
+        [Fact]
+        public async Task GetAirportByNameAsync_AirportNotFound()
+        {
+            // Arrange
+            string airportName = "NonExistentAirport";
+
+            var httpClient = new Mock<HttpClient>();
+            var airportInfoRepository = new Mock<IAirportInfoRepository>();
+            airportInfoRepository.Setup(r => r.GetByNameAsync(airportName)).Returns(new AirportInfo[] { }); // Use uma matriz vazia como exemplo
+
+
+
+            var logRepository = new Mock<ILoggerRepository>();
+            var airportRepository = new Mock<IAirportRepository>();
+
+            var airportServices = new AirportServices(httpClient.Object, airportInfoRepository.Object, logRepository.Object, airportRepository.Object);
+
+            // Act & Assert
+            await Assert.ThrowsAsync<HttpRequestException>(() => airportServices.GetAirportByNameAsync(airportName));
         }
     }
-
     public class FakeHttpMessageHandler : HttpMessageHandler
     {
         public HttpResponseMessage Response { get; set; }

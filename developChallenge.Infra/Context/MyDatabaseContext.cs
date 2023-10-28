@@ -13,6 +13,11 @@ namespace developChallenge.Infra.Context
     public class MyDatabaseContext : DbContext
     {
         #region Constructors
+
+        public MyDatabaseContext()
+        {
+
+        }
         public MyDatabaseContext(DbContextOptions<MyDatabaseContext> options) : base(options)
         {
         }
@@ -26,11 +31,11 @@ namespace developChallenge.Infra.Context
         #endregion
 
         #region DbSets
-        public DbSet<City> Cities { get; set; }
-        public DbSet<Airport> Airports { get; set; }
-        public DbSet<AirportInfo> AirportsInfos { get; set; }
-        public DbSet<Weather> Climas { get; set; }
-        public DbSet<Log> Logs { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<Airport> Airports { get; set; }
+        public virtual DbSet<AirportInfo> AirportsInfos { get; set; }
+        public virtual DbSet<Weather> Climas { get; set; }
+        public virtual DbSet<Log> Logs { get; set; }
         #endregion
 
         #region Methods

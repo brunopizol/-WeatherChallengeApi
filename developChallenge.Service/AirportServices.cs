@@ -47,8 +47,6 @@ namespace developChallenge.Service
                 {
                         var content = await response.Content.ReadAsStringAsync();
                         var airportDto = JsonSerializer.Deserialize<AirportDTO>(content);
-
-                        // Convert AirportDto to Airport
                         var airport = new Airport
                         {
                             CodigoIcao = airportDto.CodigoIcao,
@@ -70,7 +68,7 @@ namespace developChallenge.Service
                             Action = "GetAirportByIdAsync",
                             status = "Success"
                         });
-                        _airportRepository.AddAsync(airport);
+                        await _airportRepository.AddAsync(airport);
                         return airport;
                     }
                 else
@@ -88,8 +86,6 @@ namespace developChallenge.Service
             }
             catch (Exception ex)
             {
-                // Lidar com exceções que possam ocorrer durante a solicitação HTTP.
-                // Retornar nulo ou lançar uma exceção, dependendo do comportamento desejado.
                 _worker.Log(" make request GET: GetAirportByIdAsync - ERROR: " + ex.Message);
                 await _logRepository.AddLogAsync(new Log
                 {
@@ -120,7 +116,6 @@ namespace developChallenge.Service
                         Action = "GetAirportByNameAsync",
                         status = "Error"
                     });
-                    //throw new WebException("airport not found on database");
                     throw new HttpRequestException("airport not found on database", null, HttpStatusCode.NotFound);
                 }
                 string strJson = JsonSerializer.Serialize(result);

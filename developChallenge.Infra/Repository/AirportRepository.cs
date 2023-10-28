@@ -25,30 +25,43 @@ namespace developChallenge.Infra.Repository
         }
         public async Task<bool> AddAsync(Airport airport)
         {
-
-            _dbContext.Airports.Add(airport);
-            var result = await _dbContext.SaveChangesAsync();
-            if (result == 1)
+            try
             {
+                _dbContext.Airports.Add(airport);
+                var result = await _dbContext.SaveChangesAsync();
+                if (result == 1)
+                {
+                    await _loggerRepository.AddLogAsync(new Log
+                    {
+                        Action = "AirportRepository - AddAsync",
+                        CreatedAt = DateTime.Now,
+                        Description = "Adding airport to database",
+                        status = "Success"
+                    });
+                    return true;
+
+                }
+
                 await _loggerRepository.AddLogAsync(new Log
                 {
                     Action = "AirportRepository - AddAsync",
                     CreatedAt = DateTime.Now,
                     Description = "Adding airport to database",
-                    status = "Success"
+                    status = "Error"
                 });
-                return true;
-
-            }
-
-            await _loggerRepository.AddLogAsync(new Log
+                return false;
+            }catch(Exception ex)
             {
-                Action = "AirportRepository - AddAsync",
-                CreatedAt = DateTime.Now,
-                Description = "Adding airport to database",
-                status = "Error"
-            });
-            return false;
+
+                await _loggerRepository.AddLogAsync(new Log
+                {
+                    Action = "AirportRepository - AddAsync",
+                    CreatedAt = DateTime.Now,
+                    Description = "Adding airport to database",
+                    status = "Error"
+                });
+                throw ex;
+            }
         }
 
       
